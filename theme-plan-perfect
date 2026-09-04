@@ -1,0 +1,150 @@
+# Myer Systems — Theme Implementation Plan
+## Based on Brand Kit "04 PRECISION & DATA" (Steel Blue + Sky)
+
+---
+
+## A. Exact Color Palette (From Brand Kit)
+
+| Swatch | Name | HEX | HSL (for CSS vars) |
+| :---: | :--- | :--- | :--- |
+| 🟫 | **Dark Steel** | `#101820` | `210 33% 9%` |
+| 🔵 | **Steel Blue** | `#1A6FA8` | `203 73% 38%` |
+| 🩵 | **Sky Blue** | `#29A8E0` | `196 75% 52%` |
+| 🫧 | **Light Sky** | `#8FD6F5` | `198 84% 76%` |
+| 🧊 | **Pale Blue** | `#E0F4FC` | `197 78% 93%` |
+| ⬜ | **Off White** | `#F0FAFF` | `200 100% 97%` |
+| ⬛ | **Footer Midnight** | `#060D14` | `210 54% 5%` |
+| 📝 | **Body Charcoal** | `#374151` | `220 14% 27%` |
+
+---
+
+## B. Brand Kit Section-by-Section Rules (EXACT from client spec)
+
+### NAVBAR
+| Element | Color | Notes |
+| :--- | :--- | :--- |
+| Background | `#101820` (Dark Steel) | Solid, no transparency |
+| Logo | Original `myers-logo.jpeg` AS-IS | White bg version needed → or display on dark with original |
+| Wordmark text | `#FFFFFF` (White) | "Myer Systems" |
+| Nav link text | `#8FD6F5` (Light Sky) | Hover → `#FFFFFF` |
+| CTA Button bg | `#29A8E0` (Sky Blue) | Text → `#FFFFFF` |
+
+### HERO
+| Element | Color | Notes |
+| :--- | :--- | :--- |
+| Background | `#101820` (Dark Steel) | Full bleed |
+| Heading text | `#FFFFFF` (White) | Bold, large |
+| Body / subtext | `#8FD6F5` (Light Sky) | Supporting paragraph |
+| CTA Button bg | `#29A8E0` (Sky Blue) | Text → `#FFFFFF` |
+| Accent glows | `#1A6FA8` / `#29A8E0` at low opacity | Ambient depth |
+
+### BODY SECTIONS (Services, About, How We Operate, Why Choose Us, Industries)
+| Element | Color | Notes |
+| :--- | :--- | :--- |
+| Page background | `#F0FAFF` (Off White) | Main canvas |
+| Section headings | `#101820` (Dark Steel) | Strong contrast |
+| Body text | `#374151` (Body Charcoal) | WCAG AA readable |
+| Card backgrounds | `#E0F4FC` (Pale Blue) | Subtle distinction from page bg |
+| Card borders | `#8FD6F5` at ~20% opacity | Faint structural line |
+| Eyebrow badges bg | `#E0F4FC` (Pale Blue) | Text → `#1A6FA8` (Steel Blue) |
+| Interactive accent | `#29A8E0` (Sky Blue) | Links, hover states, icons |
+| CTA Buttons | `#29A8E0` bg, `#FFFFFF` text | Or `#1A6FA8` for secondary |
+
+### DARK SECTIONS (Disciplines / Projects — currently `bg-[#05060F]`)
+| Element | Color | Notes |
+| :--- | :--- | :--- |
+| Background | `#101820` (Dark Steel) | Replaces old `#05060F` |
+| Inner cards | `#0D1B2A` (slightly lighter than Dark Steel) | Replaces `#151720` |
+| Heading text | `#FFFFFF` | — |
+| Body text | `#8FD6F5` at ~80% opacity | — |
+| Tags / pills bg | `rgba(41,168,224, 0.1)` = Sky Blue at 10% | Text → `#8FD6F5` |
+| Active indicators | `#29A8E0` (Sky Blue) | Dots, status badges |
+
+### FOOTER
+| Element | Color | Notes |
+| :--- | :--- | :--- |
+| Background | `#060D14` (Footer Midnight) | Darkest zone |
+| Primary text | `#8FD6F5` (Light Sky) | Links and copy |
+| Heading text | `#FFFFFF` | Column titles |
+| Logo | White variation / original on dark bg | — |
+| Accent line | `#1A6FA8` (Steel Blue) at 30% | Decorative separator |
+
+---
+
+## C. CSS Variable Mapping (What Changes in `globals.css`)
+
+```
+OLD (Purple theme)                    →  NEW (Steel Blue + Sky)
+─────────────────────────────────────────────────────────────────
+--background: 252 25% 99%            →  200 100% 97%        (#F0FAFF)
+--foreground: 221 47% 5%             →  210 33% 9%          (#101820)
+--card: 0 0% 100%                    →  197 78% 93%         (#E0F4FC)
+--card-foreground: 221 47% 5%        →  210 33% 9%          (#101820)
+--primary: 252 88% 65%               →  196 75% 52%         (#29A8E0 Sky Blue = CTA)
+--primary-foreground: 0 0% 100%      →  0 0% 100%           (#FFFFFF — stays same)
+--secondary: 220 14% 96%             →  197 78% 93%         (#E0F4FC)
+--secondary-foreground: 221 47% 5%   →  210 33% 9%          (#101820)
+--muted: 220 14% 96%                 →  200 100% 97%        (#F0FAFF)
+--muted-foreground: 217 19% 27%      →  220 14% 27%         (#374151 — stays same)
+--accent: 252 100% 97%               →  197 78% 93%         (#E0F4FC)
+--accent-foreground: 251 100% 64%    →  203 73% 38%         (#1A6FA8 Steel Blue)
+--border: 214 32% 91%                →  198 50% 85%         (#C4E4F2 subtle blue border)
+--ring: 251 100% 64%                 →  196 75% 52%         (#29A8E0)
+--dark-bg: 230 44% 4%                →  210 33% 9%          (#101820)
+--dark-accent: 250 100% 74%          →  196 75% 52%         (#29A8E0)
+```
+
+## D. Tailwind `brand` Token Mapping
+
+```
+OLD                                   →  NEW
+─────────────────────────────────────────────────────────────────
+brand.DEFAULT = primary (#7757F4)     →  #29A8E0 (Sky Blue — primary CTA)
+brand.hover = hsl(252 88% 71%)       →  #1A6FA8 (Steel Blue — deeper on hover)
+brand.tint = accent (#F0EDFF)        →  #E0F4FC (Pale Blue)
+dark.bg = (#05060F)                  →  #101820 (Dark Steel)
+dark.accent = (#8A78FF)              →  #29A8E0 (Sky Blue)
+```
+
+## E. Hardcoded HEX Replacements Needed
+
+| Old HEX | Found In | Replace With |
+| :--- | :--- | :--- |
+| `#05060F` | disciplines.tsx, projects.tsx, services/page, how-we-operate/page | `#101820` |
+| `#05030A` | about/page.tsx, why-choose-us/page.tsx | `#101820` |
+| `#151720` | disciplines.tsx, projects.tsx | `#0D1B2A` |
+| `#5B45FF` | hero-visual.tsx (×8), work/page.tsx (×6), globals.css (×2) | `#29A8E0` |
+| `#7757F4` | globals.css comment | Remove old comment |
+| `#F5F3FF` | how-we-operate.tsx (hover state) | `#E0F4FC` |
+| `hsl(251 100% 64%)` | hero-visual.tsx SVG fill | `#1A6FA8` |
+| `rgba(102,51,238,...)` | how-we-operate.tsx shadows | `rgba(41,168,224,...)` |
+
+---
+
+## F. Logo Strategy
+
+> [!IMPORTANT]
+> The logo file `myers-logo.jpeg` must be used **AS-IS**.
+
+1. **On dark navbar (`#101820`)**: The logo has a white background in the jpeg. We will display it with `rounded-lg` and let the white bg show naturally — it creates a clean "logo badge" effect that enterprise sites commonly use.
+2. **Alternatively**: If the client provides a transparent PNG version, we swap it in later. For now, the JPEG is used exactly as provided.
+
+---
+
+## G. Implementation Order
+
+```
+Step 1  →  globals.css   (swap all CSS variable values)
+Step 2  →  tailwind.config.ts  (update brand tokens)
+Step 3  →  navbar.tsx    (dark bg #101820, white text, light-sky links, sky CTA)
+Step 4  →  hero.tsx      (dark bg #101820, white heading, light-sky body, sky CTA)
+Step 5  →  hero-visual.tsx  (replace all #5B45FF → #29A8E0)
+Step 6  →  All light sections  (bg → #F0FAFF, cards → #E0F4FC, badges → steel blue)
+Step 7  →  disciplines.tsx + projects.tsx  (dark sections: #101820 bg, #0D1B2A cards)
+Step 8  →  cta-banner.tsx  (sky blue CTA banner bg)
+Step 9  →  footer.tsx  (#060D14 bg, light-sky text)
+Step 10 →  Subpages  (about, services, work, why-choose-us, how-we-operate — fix hardcoded purples)
+```
+
+> [!CAUTION]
+> **NO color mixing or improvisation.** Every color used must trace back to one of the 8 colors in the brand palette above.

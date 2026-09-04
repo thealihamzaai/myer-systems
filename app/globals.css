@@ -1,0 +1,291 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ═══════════════════════════════════════════════════
+       Myer Systems — "04 Precision & Data" palette
+       Only these 8 colors (+ opacity variants) are used:
+       
+       Dark Steel   #101820    210 33% 9%
+       Steel Blue   #1A6FA8    203 73% 38%
+       Sky Blue     #29A8E0    196 75% 52%
+       Light Sky    #8FD6F5    198 84% 76%
+       Pale Blue    #E0F4FC    197 78% 93%
+       Off White    #F0FAFF    200 100% 97%
+       Midnight     #060D14    210 54% 5%
+       Charcoal     #374151    220 14% 27%
+       ═══════════════════════════════════════════════════ */
+
+    --background: 200 100% 97%;          /* #F0FAFF  Off White — page canvas */
+    --foreground: 210 33% 9%;            /* #101820  Dark Steel — headings */
+
+    --card: 197 78% 93%;                 /* #E0F4FC  Pale Blue — card surfaces */
+    --card-foreground: 210 33% 9%;       /* #101820  Dark Steel */
+
+    --popover: 197 78% 93%;              /* #E0F4FC */
+    --popover-foreground: 210 33% 9%;    /* #101820 */
+
+    --primary: 196 75% 52%;             /* #29A8E0  Sky Blue — primary CTA */
+    --primary-foreground: 210 33% 9%;    /* #101820  Dark Steel — text ON sky blue buttons */
+
+    --secondary: 197 78% 93%;            /* #E0F4FC  Pale Blue */
+    --secondary-foreground: 210 33% 9%;  /* #101820 */
+
+    --muted: 200 100% 97%;              /* #F0FAFF  Off White */
+    --muted-foreground: 220 14% 27%;     /* #374151  Charcoal — body text */
+
+    --accent: 197 78% 93%;              /* #E0F4FC  Pale Blue — badge/pill bg */
+    --accent-foreground: 203 73% 38%;    /* #1A6FA8  Steel Blue — badge/pill text */
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 198 50% 85%;              /* ~#C4E4F2  Light Sky @ 45% — visible but soft */
+    --input: 198 50% 85%;
+    --ring: 196 75% 52%;                /* #29A8E0  Sky Blue */
+    --radius: 0.5rem;
+
+    /* Dark section tokens */
+    --dark-bg: 210 33% 9%;              /* #101820  Dark Steel */
+    --dark-accent: 196 75% 52%;          /* #29A8E0  Sky Blue */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-muted-foreground antialiased font-sans;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  
+  /* ═══════════════════════════════════════════════════
+     OFFICIAL TYPOGRAPHY SYSTEM (GLOBAL ENFORCEMENT)
+     Every page, subpage, and component automatically inherits:
+     
+     H1 Hero Title       -> Sora Bold (700)
+     H2 Section Titles   -> Inter SemiBold (600)
+     H3 Sub-headings     -> Inter Medium (500)
+     Body Text / p       -> Inter Regular (400)
+     UI Labels / Tags    -> DM Sans (400 / 500)
+     Taglines & Quotes   -> Lora Italic (Italic)
+     ═══════════════════════════════════════════════════ */
+  h1, .h1 {
+    @apply font-heading font-bold text-ink tracking-tight;
+  }
+  h2, .h2 {
+    @apply font-sans font-semibold text-ink tracking-tight;
+  }
+  h3, .h3 {
+    @apply font-sans font-medium text-ink;
+  }
+  h4, .h4 {
+    @apply font-sans font-medium text-ink;
+  }
+  p {
+    @apply font-sans font-normal text-muted-foreground;
+  }
+  .label, .tag, .badge, .caption, .eyebrow {
+    @apply font-ui font-medium uppercase tracking-wider;
+  }
+  button, .btn {
+    @apply font-ui;
+  }
+  blockquote, .quote, .tagline {
+    @apply font-quote italic font-normal text-brand-steel;
+  }
+
+  ::selection {
+    background-color: hsl(196 75% 52% / 0.2);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Section fade-in on scroll (GPU Accelerated 60FPS) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.96) translateY(20px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-scale.is-visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-left.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Hero network node pulse */
+  @keyframes node-pulse {
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.15); }
+  }
+  .animate-node-pulse {
+    animation: node-pulse 4s ease-in-out infinite;
+  }
+
+  /* Slow drift for ambient elements */
+  @keyframes drift-slow {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(8px, -6px); }
+  }
+  .animate-drift {
+    animation: drift-slow 12s ease-in-out infinite;
+  }
+
+  /* Flow line dash for governance diagram */
+  @keyframes flow-dash {
+    to { stroke-dashoffset: -20; }
+  }
+  .animate-flow {
+    stroke-dasharray: 4 4;
+    animation: flow-dash 1.5s linear infinite;
+  }
+
+  /* Subtle gradient sweep behind hero */
+  @keyframes sweep {
+    0% { transform: translateX(-30%) rotate(0deg); }
+    100% { transform: translateX(30%) rotate(8deg); }
+  }
+  .animate-sweep {
+    animation: sweep 24s ease-in-out infinite alternate;
+  }
+
+  /* Grid patterns — now using brand blues */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-grid-dark {
+    background-image:
+      linear-gradient(to right, hsl(196 75% 52% / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(196 75% 52% / 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Staggered reveal variants */
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-32px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-left.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-scale.is-visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Progress bar fill on scroll */
+  @keyframes fill-bar {
+    from { width: 0%; }
+    to { width: var(--bar-width, 70%); }
+  }
+  .animate-fill {
+    width: 0%;
+    animation: fill-bar 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Icon glow pulse — now Sky Blue */
+  @keyframes icon-glow {
+    0%, 100% { box-shadow: 0 0 20px -4px hsl(196 75% 52% / 0.3); }
+    50% { box-shadow: 0 0 32px -4px hsl(196 75% 52% / 0.5); }
+  }
+  .animate-icon-glow {
+    animation: icon-glow 3s ease-in-out infinite;
+  }
+
+  /* Micro-Interaction: Laser scan packet along telemetry lines */
+  @keyframes scan-packet {
+    0% { transform: translateX(-100%); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateX(800%); opacity: 0; }
+  }
+  .animate-scan-packet {
+    animation: scan-packet 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  /* Micro-Interaction: Top-edge card horizon beam */
+  @keyframes horizon-shine {
+    0% { transform: translateX(-100%); opacity: 0; }
+    30% { opacity: 0.7; }
+    70% { opacity: 0.7; }
+    100% { transform: translateX(100%); opacity: 0; }
+  }
+  .animate-horizon-shine {
+    animation: horizon-shine 3.5s ease-in-out infinite;
+  }
+}
